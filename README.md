@@ -1,5 +1,7 @@
 ## Social network with Asynchronous Python
 
+The social network that was made while watching the ITVDN course
+
 Plan:
 1. Creating the user model and a class to work with their data (first and
 second name, email, profile picture, etc.)
