@@ -21,8 +21,9 @@ class Avatar(web.View):
         user = session['user']
         data = await self.post()
         avatar = data['avatar']
+
         avatar_url = os.path.join(
-            f'{BaseConfig.static_dir}/avatars/',
+            f'{BaseConfig.STATIC_DIR}/avatars/',
             avatar.filename
         )
 
@@ -33,7 +34,7 @@ class Avatar(web.View):
         await User.save_avatar_url(
             db=self.app['db'],
             user_id=user['_id'],
-            url=avatar_url
+            url=f'/avatars/{avatar.filename}'
         )
 
         location = self.app.router['index'].url_for()

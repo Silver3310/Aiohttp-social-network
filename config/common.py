@@ -1,6 +1,8 @@
 """
 Common config for the application
 """
+import pathlib
+
 from .secret import SECRET_KEY
 
 
@@ -10,5 +12,7 @@ class BaseConfig:
     app_name = 'Social Network'
     secret_key = SECRET_KEY
     database_name = 'my_database'
-    static_dir = '/home/alexey/Documents/projects/async_web/social_network/static'
+
+    PROJECT_ROOT = pathlib.Path(__file__).parent.parent
+    STATIC_DIR = str(PROJECT_ROOT / 'static')
 

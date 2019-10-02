@@ -28,6 +28,18 @@ class User:
             )
 
     @staticmethod
+    async def get_user_by_id(db: AsyncIOMotorDatabase, user_id: str):
+        user = await db.users.find_one({'_id': ObjectId(user_id)})
+        if user:
+            # to avoid the error, because _id is of the ObjectId type
+            user['_id'] = str(user['_id'])
+            return user
+        else:
+            return dict(
+                error=f'user with id {user_id} not found'
+            )
+
+    @staticmethod
     async def create_new_user(db: AsyncIOMotorDatabase, data):
         """
         Function for creating a new user
@@ -70,5 +82,5 @@ class User:
         if url and user_id:
             db.users.update_one(
                 {'_id': ObjectId(user_id)},
-                {'$set': {'avatar': url}}
+                {'$set': {'avatar_url': url}}
             )

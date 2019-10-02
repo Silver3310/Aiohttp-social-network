@@ -38,13 +38,14 @@ def setup_routers(app):
     )
     app.router.add_post(
         '/save_avatar',
-        Avatar.post
+        Avatar.post,
+        name='save_avatar'
     )
 
 
 def setup_static_routes(app):
     app.router.add_static(
         '/static/',
-        path=BaseConfig.static_dir,
+        path=BaseConfig.STATIC_DIR,
         name='static'
     )
