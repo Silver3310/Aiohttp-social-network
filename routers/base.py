@@ -1,7 +1,13 @@
 """
 URLs dispatcher
 """
-from handlers.base import Index, Login, SignUp, Logout
+from handlers.base import (
+    Index,
+    Login,
+    SignUp,
+    Logout,
+    PostView
+)
 from handlers.avatar import Avatar
 from config.common import BaseConfig
 
@@ -40,6 +46,11 @@ def setup_routers(app):
         '/save_avatar',
         Avatar.post,
         name='save_avatar'
+    )
+    app.router.add_post(
+        '/add_post',
+        PostView.post,
+        name='add_post'
     )
 
 

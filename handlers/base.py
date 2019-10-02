@@ -9,6 +9,7 @@ from aiohttp_session import get_session
 from pymongo.results import InsertOneResult
 
 from models.user import User
+from models.post import Post
 
 
 class Index(web.View):
@@ -22,10 +23,14 @@ class Index(web.View):
 
         conf = self.app['config']
         session = await get_session(self)
-        user = dict()
+        posts = list()
         if 'user' in session:
             user = session['user']
-        return dict(conf=conf, user=user)
+            posts = await Post.get_posts_by_user(
+                db=self.app['db'],
+                user_id=user['_id'],
+            )
+        return dict(conf=conf, posts=posts)
 
 
 class Login(web.View):
@@ -107,3 +112,23 @@ class Logout(web.View):
 
         location = self.app.router['login'].url_for()
         return web.HTTPFound(location=location)
+
+
+class PostView(web.View):
+    """
+    Post handling view
+    """
+
+    async def post(self):
+        data = await self.post()
+        session = await get_session(self)
+
+        if 'user' in session:
+            await Post.create_post(
+                db=self.app['db'],
+                user_id=session['user']['_id'],
+                message=data['message']
+            )
+            return web.HTTPFound(location=self.app.router['index'].url_for())
+
+        return web.HTTPForbidden()

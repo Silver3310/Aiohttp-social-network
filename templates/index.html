@@ -26,8 +26,21 @@
         </form>
 
         {% if current_user.avatar_url %}
-            <img height="300" src="{{ url('static', filename=current_user.avatar_url) }}">
+            <img height="100" src="{{ url('static', filename=current_user.avatar_url) }}">
         {% endif %}
+
+        <form action="{{ url('add_post') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+            <label for="message">Add New Post</label>
+            <input id="message" name="message" type="text" value="">
+            <input type="submit" value="Send">
+        </form>
+
+        <ul>
+            {% for post in posts %}
+                <li>{{ post.message }} | {{ post.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+            {% endfor %}
+        </ul>
+
     {% endif %}
 </body>
 </html>

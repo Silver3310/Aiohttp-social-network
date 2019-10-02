@@ -1,5 +1,5 @@
 """
-Models for the project
+Model User for the project
 """
 import hashlib
 
