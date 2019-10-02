@@ -24,3 +24,8 @@ def setup_routers(app):
         SignUp.get,
         name='signup'
     )
+    app.router.add_post(
+        '/signup',
+        SignUp.post,
+        name='signup'
+    )

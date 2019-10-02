@@ -6,6 +6,7 @@ from datetime import datetime
 import aiohttp_jinja2
 from aiohttp import web
 from aiohttp_session import get_session
+from pymongo.results import InsertOneResult
 
 from models.user import User
 
@@ -37,7 +38,7 @@ class Login(web.View):
 
         db = self.app['db']
         # user = await User.get_user(uid=1)
-        document = await db.test.find_one()
+        # document = await db.test.find_one()
 
         return dict(text=f'login Aiohttp!, {text}')
 
@@ -64,5 +65,25 @@ class SignUp(web.View):
     Sign up view
     """
 
+    @aiohttp_jinja2.template('signup.html')
     async def get(self):
-        return web.Response(text='signup Aiohttp!')
+        """Show the form for entering data"""
+
+        return dict()
+
+    async def post(self):
+        """Singing up a user"""
+
+        data = await self.post()
+        result: InsertOneResult = await User.create_new_user(
+            db=self.app['db'],
+            data=data
+        )
+        # if result has an attribute 'get' it means that it's a dict and
+        # contains an error
+        if not result or hasattr(result, 'get'):
+            location = self.app.router['signup'].url_for()
+            return web.HTTPFound(location=location)
+
+        location = self.app.router['login'].url_for()
+        return web.HTTPFound(location=location)

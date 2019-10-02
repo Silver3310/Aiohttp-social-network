@@ -20,10 +20,8 @@ def main():
     app = web.Application()
 
     # Encrypt the cookie for sessions
-    # generate a new key
-    fernet_key = fernet.Fernet.generate_key()
     # make it safe to use in URLs
-    secret_key = base64.urlsafe_b64decode(fernet_key)
+    secret_key = base64.urlsafe_b64decode(BaseConfig.secret_key)
     # Now server will remember the browser by cookie
     setup(
         app,
