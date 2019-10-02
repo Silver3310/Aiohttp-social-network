@@ -1,6 +1,8 @@
 import base64
 import logging
 
+import aiohttp_jinja2
+import jinja2
 from aiohttp import web
 from aiohttp_session import setup
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
@@ -25,6 +27,15 @@ def main():
     setup(
         app,
         EncryptedCookieStorage(secret_key)
+    )
+
+    # Now the server handles templates
+    aiohttp_jinja2.setup(
+        app,
+        loader=jinja2.PackageLoader(
+            package_name='main',
+            package_path='templates'
+        )
     )
 
     setup_routers(app)
