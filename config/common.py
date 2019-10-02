@@ -10,3 +10,5 @@ class BaseConfig:
     app_name = 'Social Network'
     secret_key = SECRET_KEY
     database_name = 'my_database'
+    static_dir = '/home/alexey/Documents/projects/async_web/social_network/static'
+

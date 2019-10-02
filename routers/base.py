@@ -2,6 +2,8 @@
 URLs dispatcher
 """
 from handlers.base import Index, Login, SignUp, Logout
+from handlers.avatar import Avatar
+from config.common import BaseConfig
 
 
 def setup_routers(app):
@@ -33,4 +35,16 @@ def setup_routers(app):
         '/logout',
         Logout.get,
         name='logout'
+    )
+    app.router.add_post(
+        '/save_avatar',
+        Avatar.post
+    )
+
+
+def setup_static_routes(app):
+    app.router.add_static(
+        '/static/',
+        path=BaseConfig.static_dir,
+        name='static'
     )

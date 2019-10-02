@@ -9,7 +9,7 @@ from aiohttp_session.cookie_storage import EncryptedCookieStorage
 from cryptography import fernet
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from routers.base import setup_routers
+from routers.base import setup_routers, setup_static_routes
 from config.common import BaseConfig
 
 
@@ -38,6 +38,7 @@ def main():
     )
 
     setup_routers(app)
+    setup_static_routes(app)
     app['config'] = BaseConfig
     # connect to the db asynchronously (thru motor)
     app['db'] = getattr(AsyncIOMotorClient(), BaseConfig.database_name)

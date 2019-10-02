@@ -15,6 +15,13 @@
 
     {% if user %}
         <a href="/logout">Log out</a>
+        <br>
+        <br>
+        <form action="/save_avatar" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+            <label for="avatar">Avatar</label>
+            <input id="avatar" name="avatar" type="file" value="">
+            <input type="submit" value="Submit">
+        </form>
     {% endif %}
 </body>
 </html>

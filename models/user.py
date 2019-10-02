@@ -3,6 +3,7 @@ Models for the project
 """
 import hashlib
 
+from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 
@@ -10,8 +11,6 @@ class User:
     """
     The User model
     """
-
-    collection = None
 
     def __init__(self):
         pass
@@ -37,6 +36,7 @@ class User:
         :param data: data from the form
         :return: result from MongoDB (dict)
         """
+
         email = data['email']
         user = await db.users.find_one({'email': email})
         if user:
@@ -57,4 +57,18 @@ class User:
         else:
             return dict(
                 error='Missing user data parameters'
+            )
+
+    @staticmethod
+    async def save_avatar_url(
+            db: AsyncIOMotorDatabase,
+            user_id: str,
+            url: str
+    ):
+        """Save profile picture"""
+
+        if url and user_id:
+            db.users.update_one(
+                {'_id': ObjectId(user_id)},
+                {'$set': {'avatar': url}}
             )
