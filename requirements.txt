@@ -16,6 +16,7 @@ ipython-genutils==0.2.0
 jedi==0.15.1
 Jinja2==2.10.1
 MarkupSafe==1.1.1
+motor==2.0.0
 multidict==4.5.2
 parso==0.5.1
 pexpect==4.7.0
@@ -24,6 +25,7 @@ prompt-toolkit==2.0.9
 ptyprocess==0.6.0
 pycparser==2.19
 Pygments==2.4.2
+pymongo==3.9.0
 requests==2.22.0
 six==1.12.0
 traitlets==4.3.2

@@ -7,6 +7,7 @@ from aiohttp import web
 from aiohttp_session import setup
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 from cryptography import fernet
+from motor.motor_asyncio import AsyncIOMotorClient
 
 from routers.base import setup_routers
 from config.common import BaseConfig
@@ -40,6 +41,8 @@ def main():
 
     setup_routers(app)
     app['config'] = BaseConfig
+    # connect to the db asynchronously (thru motor)
+    app['db'] = AsyncIOMotorClient().my_database
     logging.basicConfig(level=logging.DEBUG)  # console level debug
     web.run_app(app)
 
