@@ -9,3 +9,4 @@ class BaseConfig:
     debug = True
     app_name = 'Social Network'
     secret_key = SECRET_KEY
+    database_name = 'my_database'

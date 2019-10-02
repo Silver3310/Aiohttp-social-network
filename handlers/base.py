@@ -1,7 +1,7 @@
 """
 Views for the application
 """
-from datetime import datetime
+import hashlib
 
 import aiohttp_jinja2
 from aiohttp import web
@@ -18,8 +18,14 @@ class Index(web.View):
 
     @aiohttp_jinja2.template('index.html')
     async def get(self):  # <Request GET / >
+        """Show the introduction for a user"""
+
         conf = self.app['config']
-        return dict(conf=conf)
+        session = await get_session(self)
+        user = dict()
+        if 'user' in session:
+            user = session['user']
+        return dict(conf=conf, user=user)
 
 
 class Login(web.View):
@@ -31,30 +37,30 @@ class Login(web.View):
     async def get(self):
         """Show the form for entering data"""
 
-        # get_session may take some time
-        session = await get_session(self)
-        last_visit = session['last_visit'] = str(datetime.now())
-        text = f'Last visited: {last_visit}'
-
-        db = self.app['db']
-        # user = await User.get_user(uid=1)
-        # document = await db.test.find_one()
-
-        return dict(text=f'login Aiohttp!, {text}')
+        return dict()
 
     async def post(self):  # <Request POST /login >
         """Singing up"""
 
         # self.post() is a coroutine object
         data = await self.post()  # take all the data from the form
-        login = data['login']
+        email = data['email']
         password = data['password']
 
-        # get_session is a coroutine object
-        session = await get_session(self)
-        session['user'] = {
-            'login': login
-        }
+        user = await User.get_user(
+            db=self.app['db'],
+            email=email
+        )
+
+        if user.get('error'):
+            location = self.app.router['login'].url_for()
+            return web.HTTPFound(location=location)
+
+        if user['password'] == hashlib.sha256(
+                password.encode('utf-8')
+        ).hexdigest():
+            session = await get_session(self)
+            session['user'] = user
 
         location = self.app.router['index'].url_for()
         return web.HTTPFound(location=location)  # 302 moved temporarily
@@ -84,6 +90,20 @@ class SignUp(web.View):
         if not result or hasattr(result, 'get'):
             location = self.app.router['signup'].url_for()
             return web.HTTPFound(location=location)
+
+        location = self.app.router['login'].url_for()
+        return web.HTTPFound(location=location)
+
+
+class Logout(web.View):
+    """
+    Logout view
+    """
+
+    async def get(self):
+        """log out"""
+        session = await get_session(self)
+        del session['user']
 
         location = self.app.router['login'].url_for()
         return web.HTTPFound(location=location)

@@ -1,7 +1,7 @@
 """
 URLs dispatcher
 """
-from handlers.base import Index, Login, SignUp
+from handlers.base import Index, Login, SignUp, Logout
 
 
 def setup_routers(app):
@@ -28,4 +28,9 @@ def setup_routers(app):
         '/signup',
         SignUp.post,
         name='signup'
+    )
+    app.router.add_get(
+        '/logout',
+        Logout.get,
+        name='logout'
     )

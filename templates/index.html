@@ -6,7 +6,15 @@
 </head>
 <body>
     <h3>Index</h3>
+    {% if not user %}
     <a href="/login">Login</a>
     <a href="/signup">Sign Up</a>
+    {% endif %}
+
+    <p>{{ user }}</p>
+
+    {% if user %}
+        <a href="/logout">Log out</a>
+    {% endif %}
 </body>
 </html>

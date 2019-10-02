@@ -16,10 +16,17 @@ class User:
     def __init__(self):
         pass
 
-    @classmethod
-    async def get_user(cls, uid):
-        pass
-        # return cls.collection.find_one(uid)
+    @staticmethod
+    async def get_user(db: AsyncIOMotorDatabase, email: str):
+        user = await db.users.find_one({'email': email})
+        if user:
+            # to avoid the error, because _id is of the ObjectId type
+            user['_id'] = str(user['_id'])
+            return user
+        else:
+            return dict(
+                error=f'user with email {email} not found'
+            )
 
     @staticmethod
     async def create_new_user(db: AsyncIOMotorDatabase, data):

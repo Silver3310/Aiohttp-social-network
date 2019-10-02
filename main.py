@@ -40,7 +40,8 @@ def main():
     setup_routers(app)
     app['config'] = BaseConfig
     # connect to the db asynchronously (thru motor)
-    app['db'] = AsyncIOMotorClient().my_database
+    app['db'] = getattr(AsyncIOMotorClient(), BaseConfig.database_name)
+
     logging.basicConfig(level=logging.DEBUG)  # console level debug
     web.run_app(app)
 
