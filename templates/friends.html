@@ -5,8 +5,16 @@
     <title>Find friends</title>
 </head>
 <body>
-    {% for friend in friends %}
-        <pre>{{ friend }}</pre>
-    {% endfor %}
+    <a href="{{ url('index') }}">Main page</a>
+    <br>
+    {% if users %}
+        {% for user in users %}
+        <p>{{ user.first_name }} {{ user.last_name }}</p>
+        <form action="{{ url('add_friend') }}" method="post">
+            <input type="hidden" name="uid" value="{{ user._id }}">
+            <button type="submit">Add friend</button>
+        </form>
+        {% endfor %}
+    {% endif %}
 </body>
 </html>

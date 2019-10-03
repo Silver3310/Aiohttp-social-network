@@ -21,6 +21,8 @@ class User:
         if user:
             # to avoid the error, because _id is of the ObjectId type
             user['_id'] = str(user['_id'])
+            if 'friends' in user:
+                user['friends'] = [str(uid) for uid in user['friends']]
             return user
         else:
             return dict(
@@ -33,6 +35,8 @@ class User:
         if user:
             # to avoid the error, because _id is of the ObjectId type
             user['_id'] = str(user['_id'])
+            if 'friends' in user:
+                user['friends'] = [str(uid) for uid in user['friends']]
             return user
         else:
             return dict(
@@ -95,3 +99,16 @@ class User:
         query = {'_id': {'$ne': ObjectId(user_id)}}
         users = await db.users.find(query).to_list(limit)
         return users
+
+    @staticmethod
+    async def add_friend(
+            db: AsyncIOMotorDatabase,
+            user_id: str,
+            friend_id: str
+    ):
+        """Add a friend"""
+        await db.users.update_one(
+            {'_id': ObjectId(user_id)},
+            # $addToSet appends an element to a list
+            {'$addToSet': {'friends': ObjectId(friend_id)}}
+        )
