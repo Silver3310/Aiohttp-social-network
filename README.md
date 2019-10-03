@@ -1,14 +1,19 @@
-## Social network with Asynchronous Python
+## Social network with Asynchronous Python  
+  
+The social network that was made while watching the ITVDN course  
+  
+The project was mainly built using aiohttp as an asynchronous server, motor as an asynchronous driver for MongoDB, and Jinja2 for working with templates
 
-The social network that was made while watching the ITVDN course
+### How to run the project
 
-Plan:
-1. Creating the user model and a class to work with their data (first and
-second name, email, profile picture, etc.)
-2. Registration, data validation and creating the user
-3. Login. aiohttp will be in use to work with sessions
-4. Profile picture. To upload a profile picture, some functions of aiohttp
-will be used
-5. Creating the post model, saving the post
-6. Make it possible to add a friend, searching for friends
-7. A personal message to a friend. Sending a personal message to a user
+Make sure, you have python 3.7, python3.7-venv, git, and MongoBD being installed, then do the following:
+
+1.  ```git clone https://github.com/Silver3310/Aiohttp-social-network```
+2.  ```cd Aiohttp-social-network```
+3.  ```python3.7 -m venv venv```
+4.  ```source venv/bin/activate```
+5.  ```pip install -r requirements.txt```
+6.  ```sudo service mongod start```
+7.  ```python -c "from cryptography import fernet; print('SECRET_KEY =', fernet.Fernet.generate_key())" > config/secret.py```
+8.  ```md static```
+9.  ```python main.py```
