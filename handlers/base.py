@@ -24,13 +24,22 @@ class Index(web.View):
         conf = self.app['config']
         session = await get_session(self)
         posts = list()
+        friends = list()
         if 'user' in session:
             user = session['user']
             posts = await Post.get_posts_by_user(
                 db=self.app['db'],
                 user_id=user['_id'],
             )
-        return dict(conf=conf, posts=posts)
+            friends = await User.get_user_friends(
+                db=self.app['db'],
+                user_id=user['_id']
+            )
+        return dict(
+            conf=conf,
+            posts=posts,
+            friends=friends
+        )
 
 
 class Login(web.View):

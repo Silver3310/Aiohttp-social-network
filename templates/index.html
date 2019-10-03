@@ -36,11 +36,17 @@
             <input type="submit" value="Send">
         </form>
 
+        <h4>Posts: </h4>
         <ul>
             {% for post in posts %}
                 <li>{{ post.message }} | {{ post.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</li>
             {% endfor %}
         </ul>
+
+        <h4>Friends: </h4>
+        {% for friend in friends %}
+        <pre>{{ friend }}</pre>
+        {% endfor %}
 
     {% endif %}
 </body>

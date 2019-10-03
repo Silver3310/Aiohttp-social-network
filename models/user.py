@@ -96,6 +96,7 @@ class User:
             limit=20
     ):
         """Show all users except for the current one"""
+
         query = {'_id': {'$ne': ObjectId(user_id)}}
         users = await db.users.find(query).to_list(limit)
         return users
@@ -107,8 +108,23 @@ class User:
             friend_id: str
     ):
         """Add a friend"""
+
         await db.users.update_one(
             {'_id': ObjectId(user_id)},
             # $addToSet appends an element to a list
             {'$addToSet': {'friends': ObjectId(friend_id)}}
         )
+
+    @staticmethod
+    async def get_user_friends(
+            db: AsyncIOMotorDatabase,
+            user_id: str,
+            limit=20
+    ):
+        """Show a list of friends"""
+
+        user = await db.users.find_one({'_id': ObjectId(user_id)})
+        user_friends = await db.users.find(
+            {'_id': {'$in': user['friends']}}
+        ).to_list(limit)
+        return user_friends
