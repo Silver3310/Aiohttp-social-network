@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% set title = "Login" %}
+
+{% block content %}
 
     <b>{{ error }}</b>
     <form action="/login" method="post" accept-charset="utf-8" enctype="application/x-www-form-urlencoded">
@@ -18,5 +16,4 @@
     <p>If you are not registered yet, you can <a href="/signup">sign up</a></p>
     <p><a href="/">Main page</a></p>
 
-</body>
-</html>
+{% endblock %}

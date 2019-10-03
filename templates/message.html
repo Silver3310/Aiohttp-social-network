@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Messages</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% set title = "My messages" %}
+
+{% block content %}
+
+    <h4>Inbox messages: </h4>
     <pre>{{ inbox_messages }}</pre>
+    <h4>Sent messages: </h4>
     <pre>{{ send_messages }}</pre>
-</body>
-</html>
+
+{% endblock %}

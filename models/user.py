@@ -124,7 +124,9 @@ class User:
         """Show a list of friends"""
 
         user = await db.users.find_one({'_id': ObjectId(user_id)})
-        user_friends = await db.users.find(
-            {'_id': {'$in': user['friends']}}
-        ).to_list(limit)
+        user_friends = list()
+        if 'friends' in user:
+            user_friends = await db.users.find(
+                {'_id': {'$in': user['friends']}}
+            ).to_list(limit)
         return user_friends
