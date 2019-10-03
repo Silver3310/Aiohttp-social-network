@@ -17,6 +17,7 @@
 
     {% if current_user %}
         <a href="{{ url('friends') }}">Friends</a>
+        <a href="{{ url('messages') }}">My messages</a>
         <a href="{{ url('logout') }}">Log out</a>
         <br>
         <br>
@@ -44,10 +45,17 @@
         </ul>
 
         <h4>Friends: </h4>
+        <ul>
         {% for friend in friends %}
-        <pre>{{ friend }}</pre>
+            <li>{{ friend.first_name }} {{ friend.last_name }}</li>
+            <form action="{{ url('send_message') }}" method="post">
+                <label for="message_text">Send message</label>
+                <input id="message_text" name="message_text" type="text" value="">
+                <input type="hidden" name="to_user" value="{{ friend._id }}">
+                <button type="submit">Send...</button>
+            </form>
         {% endfor %}
-
+        </ul>
     {% endif %}
 </body>
 </html>

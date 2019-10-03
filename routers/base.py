@@ -7,6 +7,7 @@ from handlers.base import (
     SignUp,
     Logout,
     PostView,
+    MessageView
 )
 from handlers.avatar import Avatar
 from handlers.friends import FriendsView
@@ -65,6 +66,17 @@ def setup_routers(app):
         '/add_friend',
         FriendsView.post,
         name='add_friend'
+    )
+
+    app.router.add_get(
+        '/messages',
+        MessageView.get,
+        name='messages'
+    )
+    app.router.add_post(
+        '/send_message',
+        MessageView.post,
+        name='send_message'
     )
 
 
