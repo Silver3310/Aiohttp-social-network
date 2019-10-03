@@ -7,10 +7,10 @@ from handlers.base import (
     SignUp,
     Logout,
     PostView,
-    MessageView
 )
 from handlers.avatar import Avatar
 from handlers.friends import FriendsView
+from handlers.message import MessageView
 from config.common import BaseConfig
 
 
