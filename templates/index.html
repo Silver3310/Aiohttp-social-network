@@ -7,7 +7,7 @@
 </head>
 <body>
     <h3>Index</h3>
-    {% if not user %}
+    {% if not current_user %}
     <a href="{{ url('login') }}">Login</a>
     <a href="{{ url('signup') }}">Sign Up</a>
     {% endif %}
@@ -16,6 +16,7 @@
     <pre>Is anonymous? {{ is_anonymous }}</pre>
 
     {% if current_user %}
+        <a href="{{ url('friends') }}">Friends</a>
         <a href="{{ url('logout') }}">Log out</a>
         <br>
         <br>

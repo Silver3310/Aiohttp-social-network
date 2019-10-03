@@ -84,3 +84,14 @@ class User:
                 {'_id': ObjectId(user_id)},
                 {'$set': {'avatar_url': url}}
             )
+
+    @staticmethod
+    async def get_user_friends_suggestions(
+            db: AsyncIOMotorDatabase,
+            user_id: str,
+            limit=20
+    ):
+        """Show all users except for the current one"""
+        query = {'_id': {'$ne': ObjectId(user_id)}}
+        users = await db.users.find(query).to_list(limit)
+        return users

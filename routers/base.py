@@ -6,9 +6,10 @@ from handlers.base import (
     Login,
     SignUp,
     Logout,
-    PostView
+    PostView,
 )
 from handlers.avatar import Avatar
+from handlers.friends import FriendsView
 from config.common import BaseConfig
 
 
@@ -42,15 +43,28 @@ def setup_routers(app):
         Logout.get,
         name='logout'
     )
+
     app.router.add_post(
         '/save_avatar',
         Avatar.post,
         name='save_avatar'
     )
+
     app.router.add_post(
         '/add_post',
         PostView.post,
         name='add_post'
+    )
+
+    app.router.add_get(
+        '/friends',
+        FriendsView.get,
+        name='friends'
+    )
+    app.router.add_post(
+        '/add_friend',
+        FriendsView.post,
+        name='add_friend'
     )
 
 
