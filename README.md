@@ -1,4 +1,6 @@
 ## Social network with Asynchronous Python  
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a200186cdb0e423a9118e62fea44c53b)](https://www.codacy.com/manual/Silver3310/Aiohttp-social-network?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Silver3310/Aiohttp-social-network&amp;utm_campaign=Badge_Grade)
   
 The social network that was made while watching the ITVDN course  
   
